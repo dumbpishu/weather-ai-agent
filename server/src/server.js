@@ -1,13 +1,16 @@
 import "dotenv/config";
 import express from "express";
 import morgan from "morgan";
+import cors from "cors";
 import { weatherAgent } from "./agent/agent.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const clinet_uri = process.env.CLIENT_URI;
 
 app.use(express.json());
 app.use(morgan("dev"));
+app.use(cors({ origin: clinet_uri }))
 
 app.get("/", (req, res) => {
   res.status(200).json({
