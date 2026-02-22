@@ -25,7 +25,7 @@ app.post("/agent", upload.single("audio"), async (req, res) => {
 
     // text input
     if (req?.body?.q) {
-      goal = q;
+      goal = req.body.q;
     }
 
     if (req.file) {
