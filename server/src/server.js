@@ -2,7 +2,6 @@ import "dotenv/config";
 import express from "express";
 import morgan from "morgan";
 import { weatherAgent } from "./agent/agent.js";
-import { upload } from "./config/multer.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,24 +18,14 @@ app.get("/", (req, res) => {
 });
 
 
-app.post("/agent", upload.single("audio"), async (req, res) => {
+app.post("/agent", async (req, res) => {
   try {
-    let goal;
-
-    // text input
-    if (req?.body?.q) {
-      goal = req.body.q;
-    }
-
-    if (req.file) {
-      const { speechToText } = await import("./utils/speechToText.js");
-      goal = await speechToText(req.file.path);
-    }
+    const { q: goal } = req.body;
 
     if (!goal) {
       return res.status(400).json({
         success: false,
-        message: "Text or audio input required."
+        message: "user query is required."
       })
     }
 
@@ -45,7 +34,7 @@ app.post("/agent", upload.single("audio"), async (req, res) => {
     return res.status(200).json({
       success: true,
       input: goal,
-      data: result.finalAnswer
+      output: result.finalAnswer
     })
   } catch (error) {
     console.log("Agent Error: ", error);
