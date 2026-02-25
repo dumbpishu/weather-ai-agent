@@ -21,10 +21,16 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.the69bit.WeatherAI"
     },
     "web": {
       "favicon": "./assets/weather-logo.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "620b06ea-354f-438c-aabb-d79a94ab3f59"
+      }
     }
   }
 }
