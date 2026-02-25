@@ -14,10 +14,10 @@ export async function createPlan(goal, previousObservation = "") {
         1. getWeather(city) → Current weather
         2. getForecast(city) → 5 day forecast with rain data
 
-        Use forecast when user asks about:
-        - Rain this week
-        - Tomorrow weather
-        - Future predictions
+        Tool usage rules:
+        - Use getWeather for current weather.
+        - Use getForecast for future or rain queries.
+        - If multiple cities are mentioned, create separate steps for each city.
 
         Create a step-by-step execution plan.
 

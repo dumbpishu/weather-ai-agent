@@ -1,8 +1,11 @@
 import axios from "axios";
 import { getCoordinates } from "../utils/getCoordinates.js";
 
-export async function getForecast(location) {
-  const {lat, lon, name } = await getCoordinates(location);
+export async function getForecast({ city }) {
+  if (!city) {
+    throw new Error("City is required")
+  }
+  const {lat, lon, name } = await getCoordinates(city);
 
   const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${process.env.OPEN_WEATHER_API_KEY}&units=metric`;
 

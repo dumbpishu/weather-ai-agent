@@ -7,24 +7,35 @@ const tools = {
 };
 
 export async function executePlan(plan) {
-  const results = {};
+  const results = [];
 
   for (const step of plan) {
     const { tool, input } = step;
 
-    try {
-      results[tool] = await tools[tool](
-        ...Object.values(input)
-      );
-    } catch (error) {
-      console.error(
-        `Tool ${tool} failed:`,
-        error.message
-      );
+    if (!tools[tool]) {
+      results.push({
+        tool,
+        input,
+        error: "Tool not found",
+      });
+      continue;
+    }
 
-      results[tool] = {
+    try {
+      const output = await tools[tool](input);
+
+      results.push({
+        tool,
+        input,
+        output,
+      });
+
+    } catch (error) {
+      results.push({
+        tool,
+        input,
         error: error.message,
-      };
+      });
     }
   }
 
